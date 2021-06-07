@@ -1,13 +1,22 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-8">
     <div class="jumbotron bg-light p-3 mt-3 alert">
       <h1>Nnamdi's Movies App</h1>
-      <p>This is a <b>Django</b> movies Application with <b>CRUD</b> functionalities for both movies and genres. <br> Also, include functionalities like;<b> pagination, filtering and sorting.</b> <br>
-      Inclusive is a <b>RESTFUL APIs</b> for both movies and genres.</p>
-      <a href="{% url 'movies:index' %}" class="btn btn-primary">Get Started</a>
+      <p>
+        This is a <b>Django</b> movies Application with
+        <b>CRUD</b> functionalities for both movies and genres. <br />
+        Also, include functionalities like;<b>
+          pagination, filtering and sorting.</b
+        >
+        <br />
+        Inclusive is a <b>RESTFUL APIs</b> for both movies and genres.
+      </p>
+      <a href="{% url 'accounts:register' %}" class="btn btn-primary"
+        >Get Started</a
+      >
+      <a href="{% url 'accounts:login' %}" class="btn btn-secondary">Login</a>
     </div>
   </div>
   <div class="col-md-2"></div>

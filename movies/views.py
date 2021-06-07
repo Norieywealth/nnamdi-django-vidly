@@ -12,11 +12,13 @@ from rest_framework.response import Response
 from rest_framework import serializers, status
 from .serializers import GenreSerializer, MovieSerializer
 
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 # General Movies Page
 
 
+@login_required(login_url='accounts:login')
 def index(request):
     movie_fields = Movie._meta.fields
     genres = Genre.objects.all().order_by('name')
@@ -44,6 +46,7 @@ def index(request):
     return render(request, 'movies/index.html', context)
 
 
+@login_required(login_url='accounts:login')
 def liked(request, id):
     movie = Movie.objects.get(pk=id)
     if movie.liked == True:
@@ -54,6 +57,7 @@ def liked(request, id):
     return redirect('/movies/')
 
 
+@login_required(login_url='accounts:login')
 def filter(request, genre):
     movie_fields = Movie._meta.fields
     if Movie.objects.filter(genre=genre).exists():
@@ -76,6 +80,7 @@ def filter(request, genre):
 # Movies Functions
 
 
+@login_required(login_url='accounts:login')
 def movies(request):
     # return HttpResponse("Movies Management Page")
     if request.method == 'POST':
@@ -115,6 +120,7 @@ def movies(request):
         return render(request, 'movies/movies.html', context)
 
 
+@login_required(login_url='accounts:login')
 def edit_movie(request, id):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -144,6 +150,7 @@ def edit_movie(request, id):
         return render(request, 'movies/edit_movie.html', context)
 
 
+@login_required(login_url='accounts:login')
 def delete_movie(request, id):
     if request.method == 'POST':
         movie = Movie.objects.get(id=id)
@@ -167,7 +174,7 @@ class MovieList(APIView):
 
 # Genre Functions
 
-
+@login_required(login_url='accounts:login')
 def genres(request):
     # return HttpResponse("Genre Mangement Page")
     if request.method == 'POST':
@@ -197,6 +204,7 @@ def genres(request):
         return render(request, 'movies/genres.html', context)
 
 
+@login_required(login_url='accounts:login')
 def edit_genre(request, id):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -215,6 +223,7 @@ def edit_genre(request, id):
         return render(request, 'movies/edit_genre.html', context)
 
 
+@login_required(login_url='accounts:login')
 def delete_genre(request, id):
     if request.method == 'POST':
         genre = get_object_or_404(Genre, id=id)
