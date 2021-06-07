@@ -1,0 +1,81 @@
+{% extends 'base.html' %} {% block content%}
+<div class="row">
+  <div class="col-md-3">
+    <h4 class="text-center">Add genre form</h4>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Enter genre name..."
+          class="form-control"
+          required
+        />
+      </div>
+
+      <div class="form-group mt-2">
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          name="submit"
+          id="submit"
+        >
+          Add Genre
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-9">
+    <p>{% for m in messages %} {{ m }} {% endfor %}</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <!-- <th>S/N</th> -->
+          <th>Name</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for genre in genres %}
+
+        <tr>
+          <!-- <td>{{ forloop.counter }}</td> -->
+          <td>{{genre.name }}</td>
+          <td>
+            <a
+              href="{% url 'movies:edit_genre' genre.id %}"
+              class="btn btn-warning"
+              >Edit</a
+            >
+          </td>
+          <td>
+            <a
+              href="{% url 'movies:delete_genre' genre.id %}"
+              class="btn btn-danger"
+              >Delete</a
+            >
+          </td>
+        </tr>
+
+        {% empty %}
+        <p>No genres found in database</p>
+
+        {% endfor%}
+      </tbody>
+    </table>
+    <ul class="pagination">
+      {% for i in paginator.page_range %}
+
+      <li class="page-item {% if i == page_number %} active {% endif%}">
+        <a href="?page={{ i }}" class="page-link">{{i}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

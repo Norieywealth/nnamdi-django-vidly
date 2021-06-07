@@ -1,0 +1,128 @@
+{% extends 'base.html' %} {% block content%}
+<div class="row">
+  <div class="col-md-3">
+    <h4 class="text-center">Add movie form</h4>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Enter movie title..."
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="genre">Genre</label>
+        <select name="genre" id="genre" class="form-control" required>
+          <option value="" selected>-- Choose Genre --</option>
+          {% for genre in genres %}
+          <option value="{{genre.id}}">{{genre.name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="stock">Number In Stock</label>
+        <input
+          type="number"
+          name="stock"
+          id="stock"
+          placeholder="Enter movie number in stock..."
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="rate">Daily Rental Rate</label>
+        <input
+          type="text"
+          name="rate"
+          id="rate"
+          placeholder="Enter movie daily rental rate..."
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="year">Date Released</label>
+        <input
+          type="number"
+          name="year"
+          id="year"
+          placeholder="Enter movie release year..."
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group mt-2">
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          name="submit"
+          id="submit"
+        >
+          Add Movie
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-9">
+    <p>{% for m in messages %} {{ m }} {% endfor %}</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Genre</th>
+          <th>Stock</th>
+          <th>Rate</th>
+          <th>Date Released</th>
+          <th>
+            <!-- <a href="" class="btn btn-warning">Update Movie</a> -->
+          </th>
+          <th>
+            <!-- <a href="" class="btn btn-danger">Delete Movie</a> -->
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for movie in movies %}
+        <tr>
+          <td>{{ movie.title }}</td>
+          <td>{{ movie.genre.name }}</td>
+          <td>{{ movie.number_in_stock }}</td>
+          <td>{{ movie.daily_rental_rate}}</td>
+          <td>{{ movie.date_released }}</td>
+          <td>
+            <a
+              href="{% url 'movies:edit_movie' movie.id %}"
+              class="btn btn-warning"
+              >Edit</a
+            >
+          </td>
+          <td>
+            <a
+              href="{% url 'movies:delete_movie' movie.id%}"
+              class="btn btn-danger"
+              >Delete</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <ul class="pagination">
+      {% for i in paginator.page_range %}
+
+      <li class="page-item {% if i == page_number %} active {% endif%}">
+        <a href="?page={{i}}" class="page-link">{{i}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

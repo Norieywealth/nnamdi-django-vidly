@@ -1,0 +1,79 @@
+{% extends 'base.html' %} {% block content%}
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 bg-light p-3">
+    <h4 class="text-center">Edit movie form</h4>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Enter movie title..."
+          class="form-control"
+          required
+          value="{{ movie.title }}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="genre">Genre</label>
+        <select name="genre" id="genre" class="form-control" required>
+          <option value="{{ movie.genre.id}}" selected>{{movie.genre}}</option>
+          {% for genre in genres %}
+          <option value="{{genre.id}}">{{genre.name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="stock">Number In Stock</label>
+        <input
+          type="number"
+          name="stock"
+          id="stock"
+          placeholder="Enter movie number in stock..."
+          class="form-control"
+          required
+          value="{{ movie.number_in_stock }}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="rate">Daily Rental Rate</label>
+        <input
+          type="text"
+          name="rate"
+          id="rate"
+          placeholder="Enter movie daily rental rate..."
+          class="form-control"
+          required
+          value="{{ movie.daily_rental_rate }}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="year">Date Released</label>
+        <input
+          type="number"
+          name="year"
+          id="year"
+          placeholder="Enter movie release year..."
+          class="form-control"
+          required
+          value="{{ movie.date_released }}"
+        />
+      </div>
+      <div class="form-group mt-2">
+        <button type="submit" class="btn btn-primary" name="submit" id="submit">
+          Edit Movie
+        </button>
+        <a href="{% url 'movies:movies' %}" class="btn btn-secondary"
+          >No, don't edit</a
+        >
+      </div>
+    </form>
+    {% for m in messages %} {{ m }} {% endfor %}
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+{% endblock %}

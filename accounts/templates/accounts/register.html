@@ -1,0 +1,19 @@
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.username.label }}
+    {{ form.username }}
+    <br><br>
+    {{ form.email.label }}
+    {{ form.email }}
+    <br><br>
+    {{ form.password1.label }}
+    {{ form.password1 }}
+    <br><br>
+    {{ form.password2.label }}
+    {{ form.password2 }}
+    <br><br>
+    <input type="submit" value="Create user">
+</form>
+
+<a href="{% url 'accounts:login' %}">Login</a>
